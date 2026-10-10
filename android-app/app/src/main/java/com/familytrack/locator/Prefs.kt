@@ -17,7 +17,9 @@ object Prefs {
         get() = p(this).getString("api_key", "") ?: ""
         set(v) { p(this).edit().putString("api_key", v).apply() }
 
-    var Context.deviceId: String
+    // Named enrolledDeviceId (not deviceId) to avoid clashing with the
+    // Context.getDeviceId(): Int member added in Android 14 (API 34).
+    var Context.enrolledDeviceId: String
         get() = p(this).getString("device_id", "") ?: ""
         set(v) { p(this).edit().putString("device_id", v).apply() }
 

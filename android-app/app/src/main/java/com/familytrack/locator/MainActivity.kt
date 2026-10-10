@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import androidx.lifecycle.lifecycleScope
 import com.familytrack.locator.Prefs.apiKey
-import com.familytrack.locator.Prefs.deviceId
+import com.familytrack.locator.Prefs.enrolledDeviceId
 import com.familytrack.locator.Prefs.isEnrolled
 import com.familytrack.locator.Prefs.serverUrl
 
@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 serverUrl = url
                 apiKey = result.apiKey
-                deviceId = result.deviceId
+                enrolledDeviceId = result.deviceId
                 toast("Enrolled successfully.")
                 ensurePermissionsThenStart()
                 render()
