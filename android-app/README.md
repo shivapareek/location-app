@@ -30,9 +30,17 @@ cd android-app
 # APK: app/build/outputs/apk/debug/app-debug.apk
 ```
 
-> This repo does not include the Gradle wrapper JAR (a binary). Generate it once
-> with `gradle wrapper --gradle-version 8.7` or just open the project in Android
-> Studio, which provides Gradle automatically.
+The Gradle wrapper is included, so `./gradlew` works without a pre-installed Gradle.
+
+### Don't want to install anything? Let GitHub build it
+
+A GitHub Actions workflow (`.github/workflows/build-apk.yml`) builds the debug APK
+automatically on every push. After it runs:
+
+1. Open the repo on GitHub → **Actions** tab → latest **Build Android APK** run.
+2. Scroll to **Artifacts** → download **familytrack-debug-apk**.
+3. Unzip to get `app-debug.apk` and install it on the device
+   (enable "Install unknown apps" for your file manager/browser first).
 
 ## Setup on the device
 
