@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Device Admin policies. We only request the ability to be an active admin,
+     which prevents the app from being uninstalled while admin is enabled.
+     The user must explicitly confirm this on the system screen, and can
+     always disable it from Settings > Security > Device admin apps. -->
+<device-admin xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-policies>
+        <force-lock />
+    </uses-policies>
+</device-admin>

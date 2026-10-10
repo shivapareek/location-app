@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FamilyTrack — Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Login -->
+  <div id="login" class="login-wrap">
+    <form id="login-form" class="card">
+      <h1>FamilyTrack</h1>
+      <p class="muted">Admin sign in</p>
+      <input id="username" placeholder="Username" autocomplete="username" required />
+      <input id="password" type="password" placeholder="Password" autocomplete="current-password" required />
+      <button type="submit">Sign in</button>
+      <p id="login-error" class="error"></p>
+    </form>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="app" class="hidden">
+    <header>
+      <strong>FamilyTrack</strong>
+      <span class="muted" id="who"></span>
+      <div class="spacer"></div>
+      <button id="enroll-btn" class="secondary">+ Add device</button>
+      <button id="logout-btn" class="secondary">Log out</button>
+    </header>
+    <div class="main">
+      <aside id="device-list"></aside>
+      <div id="map"></div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

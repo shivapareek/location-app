@@ -1,0 +1,52 @@
+* { box-sizing: border-box; }
+:root {
+  --bg: #0f1420; --panel: #1a2234; --line: #2a3448;
+  --text: #e8edf6; --muted: #8b97ad; --accent: #4f8cff; --error: #ff6b6b;
+}
+html, body { height: 100%; margin: 0; }
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: var(--bg); color: var(--text);
+}
+.hidden { display: none !important; }
+.muted { color: var(--muted); }
+.error { color: var(--error); min-height: 1.2em; margin: 6px 0 0; font-size: 14px; }
+button {
+  background: var(--accent); color: #fff; border: 0; border-radius: 8px;
+  padding: 10px 14px; font-size: 14px; cursor: pointer;
+}
+button.secondary { background: transparent; border: 1px solid var(--line); color: var(--text); }
+input {
+  width: 100%; padding: 11px 12px; margin-top: 10px; border-radius: 8px;
+  border: 1px solid var(--line); background: #0c111b; color: var(--text); font-size: 15px;
+}
+
+/* login */
+.login-wrap { height: 100%; display: grid; place-items: center; }
+.card { background: var(--panel); padding: 28px; border-radius: 14px; width: 320px; border: 1px solid var(--line); }
+.card h1 { margin: 0; font-size: 22px; }
+.card button { width: 100%; margin-top: 14px; }
+
+/* dashboard */
+header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; border-bottom: 1px solid var(--line); background: var(--panel);
+}
+.spacer { flex: 1; }
+.main { display: flex; height: calc(100vh - 57px); }
+#device-list { width: 300px; overflow-y: auto; border-right: 1px solid var(--line); }
+#map { flex: 1; }
+
+.device {
+  padding: 12px 14px; border-bottom: 1px solid var(--line); cursor: pointer;
+}
+.device:hover { background: #202a40; }
+.device.active { background: #243150; }
+.device .name { font-weight: 600; }
+.device .meta { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.badge {
+  display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 10px;
+  background: #2a3448; color: var(--muted); margin-left: 6px;
+}
+.badge.on { background: #1f3d2a; color: #6bdc9a; }
+.leaflet-popup-content { color: #111; }

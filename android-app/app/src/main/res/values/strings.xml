@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">FamilyTrack</string>
+    <string name="device_admin_label">FamilyTrack location protection</string>
+    <string name="device_admin_description">
+        While enabled, this app cannot be uninstalled without first turning off
+        device administration in Settings. This helps a parent keep location
+        sharing active on a family device. You can disable it at any time.
+    </string>
+</resources>
