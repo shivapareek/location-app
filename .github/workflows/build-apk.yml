@@ -29,6 +29,9 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          # Avoid the obsolete 'tools' package (removed by Google); install what the build needs.
+          packages: 'platform-tools platforms;android-34 build-tools;34.0.0'
 
       - name: Build debug APK
         working-directory: android-app
