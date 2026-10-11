@@ -67,9 +67,12 @@ async function refreshDevices() {
     const adminBadge = d.admin_held ? '<span class="badge on">uninstall-protected</span>' : '';
     const batt = d.last?.battery != null ? ` · 🔋${d.last.battery}%` : '';
     el.innerHTML = `
-      <div class="name">${escapeHtml(d.label)} ${adminBadge}</div>
+      <div class="name">${escapeHtml(d.label)} ${adminBadge}
+        <button class="rename" title="Rename">✏️</button>
+      </div>
       <div class="meta">seen ${timeAgo(d.last_seen)}${batt}</div>`;
     el.onclick = () => selectDevice(d.id);
+    el.querySelector('.rename').onclick = (e) => { e.stopPropagation(); renameDevice(d.id, d.label); };
     list.appendChild(el);
 
     if (d.last) {
@@ -86,6 +89,18 @@ async function refreshDevices() {
   for (const id of Object.keys(markers)) {
     if (!devices.find((d) => d.id === id)) { map.removeLayer(markers[id]); delete markers[id]; }
   }
+}
+
+async function renameDevice(id, current) {
+  const label = prompt('New name for this device:', current || '');
+  if (!label || !label.trim()) return;
+  const r = await fetch(API + '/admin/devices/' + id, {
+    method: 'PATCH',
+    headers: { 'content-type': 'application/json', authorization: 'Bearer ' + token },
+    body: JSON.stringify({ label: label.trim() }),
+  });
+  if (r.ok) refreshDevices();
+  else alert('Rename failed');
 }
 
 async function selectDevice(id) {

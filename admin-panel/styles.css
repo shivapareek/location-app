@@ -49,4 +49,9 @@ header {
   background: #2a3448; color: var(--muted); margin-left: 6px;
 }
 .badge.on { background: #1f3d2a; color: #6bdc9a; }
+.device .name .rename {
+  background: transparent; border: 0; padding: 0 4px; cursor: pointer;
+  font-size: 13px; opacity: 0.6; float: right;
+}
+.device .name .rename:hover { opacity: 1; }
 .leaflet-popup-content { color: #111; }

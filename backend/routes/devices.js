@@ -34,6 +34,16 @@ router.post('/enroll', (req, res) => {
   res.json({ deviceId, apiKey, label: finalLabel });
 });
 
+// --- Admin: rename a device (fix an unclear label without re-enrolling) ------
+// PATCH /api/admin/devices/:id  { label }
+router.patch('/devices/:id', requireAdmin, (req, res) => {
+  const label = (req.body?.label || '').toString().trim().slice(0, 80);
+  if (!label) return res.status(400).json({ error: 'label required' });
+  const info = db.prepare('UPDATE devices SET label = ? WHERE id = ?').run(label, req.params.id);
+  if (info.changes === 0) return res.status(404).json({ error: 'device not found' });
+  res.json({ ok: true, label });
+});
+
 // --- Admin: list devices with their latest known position -------------------
 // GET /api/admin/devices
 router.get('/devices', requireAdmin, (req, res) => {

@@ -63,14 +63,21 @@ class MainActivity : AppCompatActivity() {
     private fun onEnrollClicked() {
         val url = findViewById<EditText>(R.id.serverUrl).text.toString().trim().trimEnd('/')
         val code = findViewById<EditText>(R.id.code).text.toString().trim()
+        val name = findViewById<EditText>(R.id.childName).text.toString().trim()
+        if (name.isEmpty()) {
+            toast("Enter a name so the admin can tell this device apart.")
+            return
+        }
         if (url.isEmpty() || code.length != 6) {
             toast("Enter a server URL and a 6-digit code.")
             return
         }
+        // Label the device with the entered name; fall back to the phone model.
+        val label = if (name.isNotEmpty()) name else (Build.MODEL ?: "Android device")
         lifecycleScope.launch {
             try {
                 val result = withContext(Dispatchers.IO) {
-                    Api.enroll(url, code, Build.MODEL ?: "Android device")
+                    Api.enroll(url, code, label)
                 }
                 serverUrl = url
                 apiKey = result.apiKey

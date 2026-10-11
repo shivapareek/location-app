@@ -24,10 +24,19 @@
             android:text="This device will share its location with the family admin. A permanent notification will be shown while sharing is active. Set this up only on a device you own or your own child's device, with the knowledge of the person who carries it." />
 
         <EditText
-            android:id="@+id/serverUrl"
+            android:id="@+id/childName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:hint="Name (e.g. child's name — shown to admin)"
+            android:inputType="textPersonName"
+            android:maxLength="40" />
+
+        <EditText
+            android:id="@+id/serverUrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:hint="Server URL (e.g. https://track.example.com)"
             android:inputType="textUri" />
 
