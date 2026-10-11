@@ -1,0 +1,19 @@
+# One-click deploy to Render (https://render.com).
+# In Render: New + → Blueprint → connect this repo → it reads this file.
+# You'll be asked to fill ADMIN_USERNAME and ADMIN_PASSWORD; JWT_SECRET is auto.
+services:
+  - type: web
+    name: familytrack
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_USERNAME
+        sync: false      # Render will prompt you to enter this
+      - key: ADMIN_PASSWORD
+        sync: false      # Render will prompt you to enter this
