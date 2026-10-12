@@ -2,11 +2,11 @@
 // ADMIN_USERNAME / ADMIN_PASSWORD from the environment. This makes hosted
 // deployments (Render, Railway, etc.) turnkey — no shell access needed.
 import bcrypt from 'bcryptjs';
-import { db } from './db.js';
+import { get, run, nowIso } from './db.js';
 
-export function bootstrapAdmin() {
-  const count = db.prepare('SELECT COUNT(*) AS n FROM admins').get().n;
-  if (count > 0) return;
+export async function bootstrapAdmin() {
+  const row = await get('SELECT COUNT(*) AS n FROM admins');
+  if (Number(row.n) > 0) return;
 
   const username = process.env.ADMIN_USERNAME;
   const password = process.env.ADMIN_PASSWORD;
@@ -17,7 +17,7 @@ export function bootstrapAdmin() {
     );
     return;
   }
-  db.prepare('INSERT INTO admins (username, password) VALUES (?, ?)')
-    .run(username, bcrypt.hashSync(password, 10));
+  await run('INSERT INTO admins (username, password, created_at) VALUES (?, ?, ?)',
+    [username, bcrypt.hashSync(password, 10), nowIso()]);
   console.log(`[bootstrap] Created initial admin "${username}" from environment.`);
 }

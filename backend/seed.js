@@ -1,18 +1,20 @@
-// Creates the first admin account. Usage:
+// Creates/updates the first admin account. Usage:
 //   node seed.js <username> <password>
 import bcrypt from 'bcryptjs';
-import { db } from './db.js';
+import { initDb, get, run, nowIso } from './db.js';
 
 const [, , username = 'admin', password = 'admin1234'] = process.argv;
 
-const existing = db.prepare('SELECT id FROM admins WHERE username = ?').get(username);
+await initDb();
+const existing = await get('SELECT id FROM admins WHERE username = ?', [username]);
 if (existing) {
-  db.prepare('UPDATE admins SET password = ? WHERE username = ?')
-    .run(bcrypt.hashSync(password, 10), username);
+  await run('UPDATE admins SET password = ? WHERE username = ?',
+    [bcrypt.hashSync(password, 10), username]);
   console.log(`Updated password for admin "${username}".`);
 } else {
-  db.prepare('INSERT INTO admins (username, password) VALUES (?, ?)')
-    .run(username, bcrypt.hashSync(password, 10));
+  await run('INSERT INTO admins (username, password, created_at) VALUES (?, ?, ?)',
+    [username, bcrypt.hashSync(password, 10), nowIso()]);
   console.log(`Created admin "${username}".`);
 }
 console.log('You can now log in to the admin panel.');
+process.exit(0);

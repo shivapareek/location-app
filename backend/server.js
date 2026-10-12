@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import './db.js';
+import { initDb } from './db.js';
 import { bootstrapAdmin } from './bootstrap.js';
 import authRoutes from './routes/auth.js';
 import deviceRoutes from './routes/devices.js';
@@ -12,7 +12,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-bootstrapAdmin();
+await initDb();
+await bootstrapAdmin();
 
 app.use(cors());
 app.use(express.json({ limit: '64kb' }));

@@ -1,6 +1,14 @@
 # One-click deploy to Render (https://render.com).
 # In Render: New + → Blueprint → connect this repo → it reads this file.
-# You'll be asked to fill ADMIN_USERNAME and ADMIN_PASSWORD; JWT_SECRET is auto.
+# You'll be asked to fill ADMIN_USERNAME and ADMIN_PASSWORD; the rest is automatic.
+#
+# This also provisions a FREE PostgreSQL database and wires DATABASE_URL into
+# the web service, so data (devices, locations, admin) is PERMANENT and does
+# not reset when the free web service restarts.
+databases:
+  - name: familytrack-db
+    plan: free
+
 services:
   - type: web
     name: familytrack
@@ -11,6 +19,10 @@ services:
     startCommand: node server.js
     healthCheckPath: /api/health
     envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: familytrack-db
+          property: connectionString
       - key: JWT_SECRET
         generateValue: true
       - key: ADMIN_USERNAME
